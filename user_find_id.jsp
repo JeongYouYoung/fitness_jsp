@@ -7,14 +7,14 @@
 
  <% 
   request.setCharacterEncoding("UTF-8");
-  String id =request.getParameter("id");
-  String pw = request.getParameter("pw");
+  String name =request.getParameter("name");
+  String email =request.getParameter("email");
   
  String url_mysql = "jdbc:mysql://localhost/fitness?serverTimezone=UTC&characterEncoding=utf8&useSSL=FALSE";
  String id_mysql = "root";
  String pw_mysql = "qwer1234";
 
- String whereDefault = "select * from user where uId = ? and uPw = ?";
+ String whereDefault = "select uId from user where uName = ? and uEmail = ?";
  PreparedStatement ps =null;
  ResultSet rs = null;
 
@@ -27,18 +27,13 @@ try{
     Statement stmt_mysql = conn_mysql.createStatement();
 
     ps=conn_mysql.prepareStatement(whereDefault);
-    ps.setString(1,id);
-    ps.setString(2,pw);
+    ps.setString(1,name);
+    ps.setString(2,email);
     rs=ps.executeQuery();    
 
-    if(rs.next()){
+    while(rs.next()){
       JSONObject tempJson = new JSONObject();
       tempJson.put("uId",rs.getString(1));
-      tempJson.put("uPw",rs.getString(2));
-      tempJson.put("uName",rs.getString(3));
-      tempJson.put("uBirth",rs.getString(4));
-      tempJson.put("uEmail",rs.getString(5));
-      tempJson.put("uQuit",rs.getInt(6));
       itemList.add(tempJson);
     }
     jsonList.put("results",itemList);
