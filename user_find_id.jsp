@@ -14,7 +14,7 @@
  String id_mysql = "root";
  String pw_mysql = "qwer1234";
 
- String whereDefault = "select uId from user where uName = ? and uEmail = ?";
+ String whereDefault = "select uId,uQuit from user where uName = ? and uEmail = ?";
  PreparedStatement ps =null;
  ResultSet rs = null;
 
@@ -34,6 +34,7 @@ try{
     while(rs.next()){
       JSONObject tempJson = new JSONObject();
       tempJson.put("uId",rs.getString(1));
+      tempJson.put("uQuit",rs.getInt(2));
       itemList.add(tempJson);
     }
     jsonList.put("results",itemList);
