@@ -15,7 +15,7 @@
  String id_mysql = "root";
  String pw_mysql = "qwer1234";
 
- String whereDefault = "select uPw,uQuit from user where uName = ? and uEmail = ? and uId = ?";
+ String whereDefault = "select uPw,uQuit from user where uId = ? and uEmail = ?";
  PreparedStatement ps =null;
  ResultSet rs = null;
 
@@ -28,9 +28,8 @@ try{
     Statement stmt_mysql = conn_mysql.createStatement();
 
     ps=conn_mysql.prepareStatement(whereDefault);
-    ps.setString(1,name);
+    ps.setString(1,id);
     ps.setString(2,email);
-    ps.setString(3,id);
     rs=ps.executeQuery();    
 
     while(rs.next()){
