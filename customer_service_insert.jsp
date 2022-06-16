@@ -6,12 +6,10 @@
 
     request.setCharacterEncoding("UTF-8");
 
-    String content =request.getParameter("content");
-    String uId = request.getParameter("user_uId");
-    
+    String csContent =request.getParameter("csContent");
+    String uId = request.getParameter("uId");
 
-
-    String url_mysql = "jdbc:mysql://localhost/todolist?serverTimezone=UTC&characterEncoding=utf8&useSSL=FALSE";
+    String url_mysql = "jdbc:mysql://localhost/fitness?serverTimezone=UTC&characterEncoding=utf8&useSSL=FALSE";
     String id_mysql="root";
     String pw_mysql="qwer1234";
 
@@ -22,11 +20,11 @@
         Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
         Statement stmt_mysql = conn_mysql.createStatement();
 
-        String act1 ="insert into list (lContent, lCheck, user_uId";
-        String act2=") values (?,1,?)";
+        String act1 ="insert into customer_service (csContent, csDate, user_uId";
+        String act2=") values (?,now(),?)";
 
         ps=conn_mysql.prepareStatement(act1+act2);
-        ps.setString(1,content);
+        ps.setString(1,csContent);
         ps.setString(2,uId);
 
 

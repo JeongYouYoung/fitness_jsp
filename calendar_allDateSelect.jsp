@@ -6,13 +6,15 @@
     pageEncoding="UTF-8"%>
 
  <% 
+
+ request.setCharacterEncoding("utf-8");
  String uId = request.getParameter("uId");
 
  String url_mysql = "jdbc:mysql://localhost/fitness?serverTimezone=UTC&characterEncoding=utf8&useSSL=FALSE";
  String id_mysql = "root";
  String pw_mysql = "qwer1234";
 
- String whereDefault = "SELECT * FROM customer_service where user_uId = '" + uId + "'" ;
+ String whereDefault = "select cDate from calendar where user_uId = '" + uId + "'";
 
 JSONObject jsonList = new JSONObject();
 JSONArray itemList = new JSONArray();
@@ -23,15 +25,11 @@ try{
     Statement stmt_mysql = conn_mysql.createStatement();
 
     ResultSet rs = stmt_mysql.executeQuery(whereDefault);
-
-    while(rs.next()){
-        JSONObject tempJson = new JSONObject();
-        tempJson.put("csCode",rs.getInt(1));
-        tempJson.put("csContent",rs.getString(2));
-        tempJson.put("csDate",rs.getString(3));
-        tempJson.put("csAdmin",rs.getInt(4));
-        itemList.add(tempJson);
-    }
+        while(rs.next()){
+            JSONObject tempJson = new JSONObject();
+            tempJson.put("cDate",rs.getString(1));
+            itemList.add(tempJson);
+        }
 
     jsonList.put("results",itemList);
     conn_mysql.close();
